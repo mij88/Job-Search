@@ -1,4 +1,4 @@
-# Python Project
+# Job Search Record Project
 
 A Project to allow users to record  and edit jobs that they have applied 
 
@@ -18,7 +18,7 @@ With macOS replace pip with pip3
 
 ```bash
 pip install Flask
-pip install Flas-SQLAlchemy
+pip install Flask-SQLAlchemy
 pip install flask-cors
 ```
 
