@@ -11,10 +11,10 @@ class Job(db.Model):
     def to_json(self):
         return {
             "id": self.id,
-            "company_name": self.company_name,
+            "companyName": self.company_name,
             "position": self.position,
-            "job_link": self.job_link,
-            "date_applied": self.date_applied,
-             "additional_info" : self.additional_info
+            "jobLink": self.job_link,
+            "dateApplied": self.date_applied,
+            "additionalInfo" : self.additional_info
 
         }
