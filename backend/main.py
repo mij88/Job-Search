@@ -43,29 +43,32 @@ def update_job(job_id):
     job = Job.query.get(job_id)
 
     if not job:
-        return jsonify({"message": "Job not found"}), 404
+        return jsonify({"message": "Job with id of " + str(job_id) + " not found"}), 404
     
     data = request.json
     job.company_name = data.get("companyName", job.company_name) #modify job to update company name (if no company name found then leave as is)
     job.position = data.get("position", job.position)
-    job.job_link = data.get("job_link", job.job_link)
-    job.date_applied = data.get("date_applied", job.date_applied)
-    job.additional_info = data.get("additional_info", job.additional_info)
+    job.job_link = data.get("jobLink", job.job_link)
+    job.date_applied = data.get("dateApplied", job.date_applied)
+    job.additional_info = data.get("additionalInfo", job.additional_info)
 
     db.session.commit()
 
-    return jsonify({"message": "Job Updated"}), 200
+    message = "Job with id " + str(job_id) + " updated"
+
+    return jsonify({"message": "Job with id: " + str(job_id) + " updated"}), 200
 
 @app.route("/delete_job/<int:job_id>", methods=["DELETE"])
 def delete_job(job_id):
     job = Job.query.get(job_id)
+ 
     if not job:
-        return jsonify({"message": "Job not found"}), 404
+        return jsonify({"message": "Job with id of " + str(job_id) + " not found"}), 404
     
     db.session.delete(job) ## delete job
     db.session.commit()
 
-    return jsonify({"message": "Job deleted"}), 200
+    return jsonify({"message": "Job with id of " + str(job_id) + " deleted"}), 200
 
 if __name__ == "__main__": 
     with app.app_context(): 
