@@ -38,6 +38,35 @@ def add_job():
     return jsonify({"message": "Job recorded"}), 201 #if no error occurs then send this message to user
 
 
+@app.route("/update_job/<int:job_id>", methods=["Patch"])
+def update_job(job_id):
+    job = Job.query.get(job_id)
+
+    if not job:
+        return jsonify({"message": "Job not found"}), 404
+    
+    data = request.json
+    job.company_name = data.get("companyName", job.company_name) #modify job to update company name (if no company name found then leave as is)
+    job.position = data.get("position", job.position)
+    job.job_link = data.get("job_link", job.job_link)
+    job.date_applied = data.get("date_applied", job.date_applied)
+    job.additional_info = data.get("additional_info", job.additional_info)
+
+    db.session.commit()
+
+    return jsonify({"message": "Job Updated"}), 200
+
+@app.route("/delete_job/<int:job_id>", methods=["DELETE"])
+def delete_job(job_id):
+    job = Job.query.get(job_id)
+    if not job:
+        return jsonify({"message": "Job not found"}), 404
+    
+    db.session.delete(job) ## delete job
+    db.session.commit()
+
+    return jsonify({"message": "Job deleted"}), 200
+
 if __name__ == "__main__": 
     with app.app_context(): 
         db.create_all() #spin up database
